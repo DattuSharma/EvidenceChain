@@ -216,6 +216,48 @@ def search_evidence_record():
     )
 
 
+def record_details():
+    print()
+
+    record_id = input("Enter Evidence Record ID: ")
+
+    record_path = os.path.join(
+        "evidence",
+        "records",
+        f"{record_id}.json"
+    )
+
+    if not os.path.exists(record_path):
+        print("Error: Evidence Record ID not found.")
+        return
+
+    try:
+        with open(record_path, "r") as file:
+            record = json.load(file)
+
+    except (json.JSONDecodeError, OSError):
+        print("Error: Unable to read evidence record.")
+        return
+
+    print()
+    print("Evidence Record Details")
+    print("=======================")
+
+    print("Record ID:", record.get("record_id"))
+    print("File Name:", record.get("file_name"))
+    print("File Type:", record.get("file_type"))
+    print("SHA-256:", record.get("sha256"))
+    print("File Size:", record.get("file_size"))
+    print("Timestamp:", record.get("timestamp"))
+    print("Integrity Hash:", record.get("integrity_hash"))
+
+    print()
+    print(
+        "Record Integrity:",
+        verify_record_integrity(record)
+    )
+
+
 print("================================")
 print("        EvidenceChain")
 print("   Digital Evidence Verification")
@@ -229,7 +271,8 @@ while True:
     print("2. Verify Evidence")
     print("3. List Evidence Records")
     print("4. Search Evidence Record")
-    print("5. Exit")
+    print("5. Record Details")
+    print("6. Exit")
     print()
 
     choice = input("Enter your choice: ")
@@ -247,6 +290,9 @@ while True:
         search_evidence_record()
 
     elif choice == "5":
+        record_details()
+
+    elif choice == "6":
         print("Exiting EvidenceChain.")
         break
 
