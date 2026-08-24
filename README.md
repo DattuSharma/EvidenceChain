@@ -12,3 +12,26 @@
 - Documentation support
 - Presentation
 - Project representation
+## Project Structure
+
+```text
+EvidenceChain/
+│
+├── main.py
+├── README.md
+├── .gitignore
+│
+├── src/
+│   ├── evidence_record.py
+│   ├── hasher.py
+│   └── verification.py
+│
+├── tests/
+│   ├── test_evidence_record.py
+│   ├── test_hasher.py
+│   └── test_verification.py
+│
+├── evidence/
+│   └── record.json
+│
+└── uploads/
