@@ -3,10 +3,12 @@ from src.verification import (
     create_verification_report,
     save_text_report
 )
+
 import os
 import json
 
 from src.hasher import calculate_sha256
+
 from src.evidence_record import (
     create_evidence_record,
     save_evidence_record,
@@ -15,43 +17,7 @@ from src.evidence_record import (
     verify_record_integrity
 )
 
-def list_evidence_records():
-    records_path = "evidence/records"
 
-    if not os.path.exists(records_path):
-        print("No evidence records found.")
-        return
-
-    files = [
-        file for file in os.listdir(records_path)
-        if file.endswith(".json")
-    ]
-
-    if not files:
-        print("No evidence records found.")
-        return
-
-    print()
-    print("Evidence Records")
-    print("================")
-
-    for file_name in sorted(files):
-        path = os.path.join(records_path, file_name)
-
-        try:
-            with open(path, "r") as file:
-                record = json.load(file)
-
-            print()
-            print("ID:", record.get("record_id"))
-            print("File:", record.get("file_name"))
-            print("SHA-256:", record.get("sha256"))
-            print("Size:", record.get("file_size"))
-            print("Date:", record.get("timestamp"))
-
-        except (json.JSONDecodeError, OSError):
-            print()
-            print("Unable to read:", file_name)
 def create_record():
     print()
 
@@ -174,10 +140,87 @@ def verify_evidence():
     print("Text report saved.")
 
 
+def list_evidence_records():
+    records_path = "evidence/records"
+
+    if not os.path.exists(records_path):
+        print("No evidence records found.")
+        return
+
+    files = [
+        file for file in os.listdir(records_path)
+        if file.endswith(".json")
+    ]
+
+    if not files:
+        print("No evidence records found.")
+        return
+
+    print()
+    print("Evidence Records")
+    print("================")
+
+    for file_name in sorted(files):
+        path = os.path.join(records_path, file_name)
+
+        try:
+            with open(path, "r") as file:
+                record = json.load(file)
+
+            print()
+            print("ID:", record.get("record_id"))
+            print("File:", record.get("file_name"))
+            print("SHA-256:", record.get("sha256"))
+            print("Size:", record.get("file_size"))
+            print("Date:", record.get("timestamp"))
+
+        except (json.JSONDecodeError, OSError):
+            print()
+            print("Unable to read:", file_name)
+
+
+def search_evidence_record():
+    print()
+
+    record_id = input("Enter Evidence Record ID to search: ")
+
+    record_path = os.path.join(
+        "evidence",
+        "records",
+        f"{record_id}.json"
+    )
+
+    if not os.path.exists(record_path):
+        print("Error: Evidence Record ID not found.")
+        return
+
+    try:
+        with open(record_path, "r") as file:
+            record = json.load(file)
+
+    except (json.JSONDecodeError, OSError):
+        print("Error: Unable to read evidence record.")
+        return
+
+    print()
+    print("Evidence Record Found")
+    print("=====================")
+    print("ID:", record.get("record_id"))
+    print("File:", record.get("file_name"))
+    print("SHA-256:", record.get("sha256"))
+    print("Size:", record.get("file_size"))
+    print("Date:", record.get("timestamp"))
+    print(
+        "Record integrity:",
+        verify_record_integrity(record)
+    )
+
+
 print("================================")
 print("        EvidenceChain")
 print("   Digital Evidence Verification")
 print("================================")
+
 
 while True:
 
@@ -185,7 +228,8 @@ while True:
     print("1. Create Evidence Record")
     print("2. Verify Evidence")
     print("3. List Evidence Records")
-    print("4. Exit")
+    print("4. Search Evidence Record")
+    print("5. Exit")
     print()
 
     choice = input("Enter your choice: ")
@@ -200,6 +244,9 @@ while True:
         list_evidence_records()
 
     elif choice == "4":
+        search_evidence_record()
+
+    elif choice == "5":
         print("Exiting EvidenceChain.")
         break
 
