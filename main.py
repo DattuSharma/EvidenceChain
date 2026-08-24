@@ -15,7 +15,43 @@ from src.evidence_record import (
     verify_record_integrity
 )
 
+def list_evidence_records():
+    records_path = "evidence/records"
 
+    if not os.path.exists(records_path):
+        print("No evidence records found.")
+        return
+
+    files = [
+        file for file in os.listdir(records_path)
+        if file.endswith(".json")
+    ]
+
+    if not files:
+        print("No evidence records found.")
+        return
+
+    print()
+    print("Evidence Records")
+    print("================")
+
+    for file_name in sorted(files):
+        path = os.path.join(records_path, file_name)
+
+        try:
+            with open(path, "r") as file:
+                record = json.load(file)
+
+            print()
+            print("ID:", record.get("record_id"))
+            print("File:", record.get("file_name"))
+            print("SHA-256:", record.get("sha256"))
+            print("Size:", record.get("file_size"))
+            print("Date:", record.get("timestamp"))
+
+        except (json.JSONDecodeError, OSError):
+            print()
+            print("Unable to read:", file_name)
 def create_record():
     print()
 
@@ -148,7 +184,8 @@ while True:
     print()
     print("1. Create Evidence Record")
     print("2. Verify Evidence")
-    print("3. Exit")
+    print("3. List Evidence Records")
+    print("4. Exit")
     print()
 
     choice = input("Enter your choice: ")
@@ -160,6 +197,9 @@ while True:
         verify_evidence()
 
     elif choice == "3":
+        list_evidence_records()
+
+    elif choice == "4":
         print("Exiting EvidenceChain.")
         break
 
