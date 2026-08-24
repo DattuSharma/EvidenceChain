@@ -13,10 +13,28 @@ from src.evidence_record import (
     verify_record_integrity
 )
 
+
 print("================================")
-print("      EvidenceChain")
-print("  Digital Evidence Verification")
+print("        EvidenceChain")
+print("   Digital Evidence Verification")
 print("================================")
+print()
+
+print("1. Verify Evidence")
+print("2. Exit")
+print()
+
+choice = input("Enter your choice: ")
+
+if choice == "2":
+    print("Exiting EvidenceChain.")
+    exit()
+
+if choice != "1":
+    print("Invalid choice.")
+    exit()
+
+print()
 
 file_path = input("Enter evidence file path: ")
 
@@ -34,6 +52,7 @@ except FileNotFoundError:
 
 record_integrity_verified = verify_record_integrity(record)
 
+print()
 print("Record integrity:", record_integrity_verified)
 
 if not record_integrity_verified:
