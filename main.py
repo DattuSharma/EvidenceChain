@@ -258,6 +258,43 @@ def record_details():
     )
 
 
+def verification_history():
+    print()
+
+    record_id = input("Enter Evidence Record ID: ")
+
+    verification_path = os.path.join(
+        "evidence",
+        "Verification",
+        f"{record_id}.json"
+    )
+
+    if not os.path.exists(verification_path):
+        print("No verification history found.")
+        return
+
+    try:
+        with open(verification_path, "r") as file:
+            result = json.load(file)
+
+    except (json.JSONDecodeError, OSError):
+        print("Error: Unable to read verification history.")
+        return
+
+    print()
+    print("Verification History")
+    print("====================")
+
+    print("Record ID:", result.get("record_id"))
+    print("Verified:", result.get("verified"))
+    print("Timestamp:", result.get("timestamp"))
+
+    if result.get("verified") is True:
+        print("Result: VERIFIED")
+    else:
+        print("Result: TAMPERED")
+
+
 print("================================")
 print("        EvidenceChain")
 print("   Digital Evidence Verification")
@@ -272,7 +309,8 @@ while True:
     print("3. List Evidence Records")
     print("4. Search Evidence Record")
     print("5. Record Details")
-    print("6. Exit")
+    print("6. Verification History")
+    print("7. Exit")
     print()
 
     choice = input("Enter your choice: ")
@@ -293,6 +331,9 @@ while True:
         record_details()
 
     elif choice == "6":
+        verification_history()
+
+    elif choice == "7":
         print("Exiting EvidenceChain.")
         break
 
