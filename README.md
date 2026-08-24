@@ -1,37 +1,46 @@
-## Team
+# EvidenceChain
 
-### Dattu Sharma
-- Project implementation
-- Python development
-- Evidence verification logic
-- SHA-256 hashing
-- Testing and tamper detection
+## Digital Media Evidence Trust & Verification System
 
-### Jaswanth
-- Project communication
-- Documentation support
-- Presentation
-- Project representation
-## Project Structure
+EvidenceChain is a Python-based digital evidence verification system designed to detect whether a digital evidence file has been modified after its original evidence record was created.
+
+The system uses SHA-256 hashing, file-size verification, record integrity hashing, automated testing, and verification reports.
+
+---
+
+## Key Features
+
+- Create digital evidence records
+- Generate SHA-256 hashes
+- Store evidence metadata
+- Protect evidence records with integrity hashes
+- Verify evidence against its original record
+- Detect modified or tampered files
+- Verify file size changes
+- Generate JSON verification reports
+- Generate text verification reports
+- Automated test suite using pytest
+- Interactive command-line interface
+
+---
+
+## How It Works
 
 ```text
-EvidenceChain/
-│
-├── main.py
-├── README.md
-├── .gitignore
-│
-├── src/
-│   ├── evidence_record.py
-│   ├── hasher.py
-│   └── verification.py
-│
-├── tests/
-│   ├── test_evidence_record.py
-│   ├── test_hasher.py
-│   └── test_verification.py
-│
-├── evidence/
-│   └── record.json
-│
-└── uploads/
+Evidence File
+     |
+     v
+SHA-256 Hash
+     |
+     v
+Evidence Record
+     |
+     v
+Record Integrity Hash
+     |
+     v
+Verification
+     |
+     +---------> VERIFIED
+     |
+     +---------> TAMPERED
