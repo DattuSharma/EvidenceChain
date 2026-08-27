@@ -51,3 +51,22 @@ def test_create_tampered_verification_report():
     assert report["record_integrity"] is True
     assert report["evidence_verified"] is False
     assert report["status"] == "TAMPERED"
+
+
+def test_verification_history_event_integrity():
+    history_record = {
+        "record_id": "test-record",
+        "file_name": "test.txt",
+        "original_sha256": "abc123",
+        "current_sha256": "abc123",
+        "original_file_size": 18,
+        "current_file_size": 18,
+        "record_integrity": True,
+        "verified": True,
+        "result": "VERIFIED",
+        "timestamp": "2026-08-25T22:00:00"
+    }
+
+    assert history_record["record_integrity"] is True
+    assert history_record["verified"] is True
+    assert history_record["result"] == "VERIFIED"

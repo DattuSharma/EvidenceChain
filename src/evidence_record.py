@@ -6,6 +6,10 @@ import hashlib
 
 
 def calculate_record_integrity(record):
+    """
+    Calculate a SHA-256 integrity hash for the evidence record.
+    """
+
     data = {
         "record_id": record["record_id"],
         "file_name": record["file_name"],
@@ -24,6 +28,10 @@ def calculate_record_integrity(record):
 
 
 def create_evidence_record(file_name, file_hash, file_size):
+    """
+    Create a new evidence record.
+    """
+
     record = {
         "record_id": str(uuid.uuid4()),
         "file_name": file_name,
@@ -39,11 +47,19 @@ def create_evidence_record(file_name, file_hash, file_size):
 
 
 def save_evidence_record(record, output_path):
+    """
+    Save an evidence record as JSON.
+    """
+
     with open(output_path, "w") as file:
         json.dump(record, file, indent=2)
 
 
 def load_evidence_record(record_id):
+    """
+    Load an evidence record using its record ID.
+    """
+
     path = f"evidence/records/{record_id}.json"
 
     with open(path, "r") as file:
@@ -51,6 +67,14 @@ def load_evidence_record(record_id):
 
 
 def verify_evidence_record(record, current_hash, current_file_size=None):
+    """
+    Verify the evidence file against the stored record.
+
+    Checks:
+    1. SHA-256 hash
+    2. File size, when provided
+    """
+
     if record["sha256"] != current_hash:
         return False
 
@@ -62,14 +86,15 @@ def verify_evidence_record(record, current_hash, current_file_size=None):
 
 
 def verify_record_integrity(record):
+    """
+    Verify that the evidence record itself has not been modified.
+    """
+
     if "integrity_hash" not in record:
         return False
 
     stored_hash = record["integrity_hash"]
 
-    record_without_hash = record.copy()
-    del record_without_hash["integrity_hash"]
-
-    calculated_hash = calculate_record_integrity(record_without_hash)
+    calculated_hash = calculate_record_integrity(record)
 
     return stored_hash == calculated_hash
