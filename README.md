@@ -126,3 +126,26 @@ EvidenceChain/
 ├── README.md
 ├── .gitignore
 └── requirements.txt
+---
+
+## 📸 Application Screenshots
+
+### 📊 Dashboard
+
+![EvidenceChain Dashboard](screenshots/dashboard.png)
+
+The dashboard provides an overview of evidence records and verification results.
+
+### 🔴 Tampered Evidence
+
+![Tampered Evidence](screenshots/tampered.png)
+
+When evidence is modified, its SHA-256 hash changes and EvidenceChain reports **TAMPERED**.
+
+---
+
+## 👨‍💻 Project
+
+**EvidenceChain Team**
+
+A cybersecurity-focused academic project for digital evidence integrity and tamper detection.
