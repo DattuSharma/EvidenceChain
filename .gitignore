@@ -1,8 +1,23 @@
 __pycache__/
-.pytest_cache/
 *.pyc
-.vscode/
+.pytest_cache/
+.venv/
+venv/
+env/
 
-evidence/records/
+evidence_backup/
+
 evidence/Verification/
-uploads/
+evidence/records/
+evidence/record.json
+
+uploads/*
+
+instance/
+
+.vscode/
+.idea/
+
+*.log
+.DS_Store
+Thumbs.db
